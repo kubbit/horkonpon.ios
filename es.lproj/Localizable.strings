@@ -1,0 +1,50 @@
+/* 
+  Localizable.strings
+  HorKonpon
+
+  Copyright (c) 2014 Kubbit Information Technology. All rights reserved.
+*/
+"Bidali" = "Enviar";
+"Bidaltzen..." = "Enviando...";
+"Kokapena bilatzen..." = "Buscando localización...";
+"Kokapena ezin izan da ezarri. GPS-a aktibo dagoelaz ziurtatu" = "No se ha podido establecer la posición. Compruebe que el GPS está activado";
+"Kokapena ezarrita" = "Posición establecida";
+"Onartu" = "Aceptar";
+"Errorea" = "Error";
+"Argazkia edo oharra beharrezkoa da" = "Es necesario enviar una foto o un comentario";
+"Kokapena ezin izan da ezarri. GPS-a aktibo dagoelaz ziurtatu" = "No se ha podido establecer la posición. Compruebe que el GPS está activado";
+"Bidaltzerakoan errorea. Beranduago saiatu berriz ere." = "Error durante el envío. Vuelva a intentarlo más adelante.";
+"DISCLAIMER" = "<html>
+	<head>
+		<style type=\"text/css\">
+body
+{
+	font-size: smaller;
+}
+p
+{
+	text-align: justify;
+	text-indent: 1em;
+}
+div:first-of-type
+{
+	margin-bottom: 4em;
+}
+		</style>
+	</head>
+	<body>
+		<div>
+			<p><b>PRIVACIDAD</b></p>
+			<p>Los Datos Personales aportados son recogidos bajo el consentimiento del usuario y serán objeto de tratamiento automatizado e incorporados al Sistema de Información de Kubbit Information Technology S.L.</p>
+			<p>El uso de dichos datos se restringirá exclusivamente al ámbito de la gestión de la aplicación, pudiendo procederse a su cesión o comunicación a otras Administraciones Públicas o terceros en los supuestos previstos en la Ley Orgánica 15/1999 de 13 de diciembre de Protección de Datos de Carácter Personal.</p>
+			<p>Los interesados podrán ejercitar los derechos de acceso, cancelación, rectificación y oposición a través del envío de un correo electrónico al buzón <i><a href=\"mailto:arco@kubbit.com\">arco@kubbit.com</a></i> con el asunto \"BAJA HORKONPON\".</p>
+		</div>
+		<div>
+			<p><b>AVISO LEGAL</b></p>
+			<p>Los derechos de propiedad intelectual de la aplicación \"Horkonpon\", y de los distintos elementos en él contenidos son titularidad de KUBBIT INFORMATION TECHNOLOGY S.L. (en adelante KUBBIT). \"Horkonpon\" es una aplicación publicada bajo \"GNU Licencia Pública General versión 2 (GPLv2)\". Puede encontrarse toda la información en relación a dicha licencia en el siguiente dirección:<br />
+			<a href=\"http://www.gnu.org/licenses/gpl-2.0.html\">http://www.gnu.org/licenses/gpl-2.0.html</a></p>
+			<p>KUBBIT se reserva la facultad de efectuar, en cualquier momento y sin necesidad de previo aviso, modificaciones y actualizaciones sobre la aplicación.</p>
+			<p>El contenido enviado a través de la aplicación es de exclusiva responsabilidad de quien lo envía. KUBBIT no responderá de ninguna consecuencia, daño o perjuicio que pudieran derivarse del envío de información contrario a la ley, con excepción de todas aquellas actuaciones que resulten de la aplicación de las disposiciones legales a las que deba someterse en el estricto ejercicio de sus competencias.</p>
+		</div>
+	</body>
+</html>";

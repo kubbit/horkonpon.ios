@@ -1,0 +1,40 @@
+/*
+  Localizable.strings
+  HorKonpon
+
+  Copyright (c) 2014 Kubbit Information Technology. All rights reserved.
+*/
+"DISCLAIMER" = "<html>
+	<head>
+		<style type=\"text/css\">
+body
+{
+	font-size: smaller;
+}
+p
+{
+	text-align: justify;
+	text-indent: 1em;
+}
+div:first-of-type
+{
+	margin-bottom: 4em;
+}
+		</style>
+	</head>
+	<body>
+		<div>
+			<p><b>PRIBATUTASUNA</b></p>
+			<p>Emandako Datu Pertsonalak erabiltzailearen onespenaz jasotzen dira, tratamendu automatizatua izango dute eta KUBBIT INFORMATION TECHNOLOGY S.L.ko Informazio Sisteman sartuko dira.</p>
+			<p>Datu horiek, aplikazioaren eremuan, kudeaketarako soilik erabiliko dira, eta beste administrazio publikoei edo besteri laga edo jakinarazi ahal izango zaizkie abenduaren 13ko 15/1999 Lege Organikoan (Datu Pertsonalak Babestekoan) aurreikusitakoa gertatzen denean.</p>
+			<p>Interesdunek datuak eskuratzeko, ezeztatzeko, zuzentzeko eta aurka egiteko eskubidea erabili ahal izango dute posta elektroniko bat <i><a href=\"mailto:arco@kubbit.com\">arco@kubbit.com</a></i> helbidera bidaliz. Mezuaren gaian \"BAJA HORKONPON\" ezarri beharko dute.</p>
+		</div>
+		<div>
+			<p><b>LEGEZKO OHARRA</b></p>
+			<p>\"Horkonpon\" izeneko aplikazioaren eta bertan agertzen diren elementu guztien jabetza intelektualaren eskubideak KUBBIT INFORMATION TECHNOLOGY S.L.-ek (hemendik aurrera KUBBIT) dauzka. \"Horkonpon\" aplikazioa \"GNU General Public License version 2 (GPLv2)\" lizentziarekin baimendu da. Hurrengo helbidean GPLv2-ren informazio guztia lortu daiteke:<br />
+			<a href=\"http://www.gnu.org/licenses/gpl-2.0.html\">http://www.gnu.org/licenses/gpl-2.0.html</a></p>
+			<p>KUBBITek bere buruari aitortzen dio, edozein unean eta aurretiaz ohartarazi gabe, aplikazioan dagoen informazioa edo haren konfigurazio zein itxuraren aldaketak eta eguneraketak egiteko ahalmena.</p>
+			<p>\"Horkonpon\" aplikazioaren bitartez bidaltzen den informazioa erabiltzailearen ardurakoak izango dira. Informazio bidalketa hauek sor dezakeen ondorio edo kaltearen inguruan, KUBBIT-ek ez du inolako erantzukizunik izango, bere eskumenen erabilera zehatzetan jarraitu behar dituen legezko xedapenak ezartzearen ondorioak diren egintza guztietan izan ezik.</p>
+		</div>
+	</body>
+</html>";

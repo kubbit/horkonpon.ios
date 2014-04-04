@@ -1,0 +1,57 @@
+
+/* Class = "IBUINavigationItem"; title = "Lege-oharra"; ObjectID = "1IV-6D-yA9"; */
+"1IV-6D-yA9.title" = "Aviso legal";
+
+/* Class = "IBUILabel"; text = "DIRULAGUNTZA"; ObjectID = "6Zm-LU-fDb"; */
+"6Zm-LU-fDb.text" = "PROYECTO SUBVENCIONADO POR";
+
+/* Class = "IBUILabel"; text = "http://kubbit.com"; ObjectID = "Cab-nE-FkH"; */
+"Cab-nE-FkH.text" = "http://kubbit.com";
+
+/* Class = "IBUITabBarItem"; title = "Lege oharra"; ObjectID = "EXt-Eh-ryo"; */
+"EXt-Eh-ryo.title" = "Aviso legal";
+
+/* Class = "IBUILabel"; text = "Kubbit Information Technology"; ObjectID = "LWm-JO-y7h"; */
+"LWm-JO-y7h.text" = "Kubbit Information Technology";
+
+/* Class = "IBUILabel"; text = "Hernaniko Udala"; ObjectID = "Ses-wK-yoI"; */
+"Ses-wK-yoI.text" = "Ayuntamiento de Hernani";
+
+/* Class = "IBUINavigationItem"; title = "Honi buruz..."; ObjectID = "XnD-jV-BD2"; */
+"XnD-jV-BD2.title" = "Acerca de...";
+
+/* Class = "IBUILabel"; text = "http://www.errenteria.net"; ObjectID = "blz-kr-Ras"; */
+"blz-kr-Ras.text" = "http://www.errenteria.net";
+
+/* Class = "IBUILabel"; text = "OHARRAK"; ObjectID = "c0k-eZ-t1A"; */
+"c0k-eZ-t1A.text" = "OBSERVACIONES";
+
+/* Class = "IBUITabBarItem"; title = "Honi buruz..."; ObjectID = "dqX-5e-61E"; */
+"dqX-5e-61E.title" = "Acerca de...";
+
+/* Class = "IBUILabel"; text = "http://www.hernani.net"; ObjectID = "eec-dr-RpG"; */
+"eec-dr-RpG.text" = "http://www.hernani.net";
+
+/* Class = "IBUINavigationItem"; title = "HorKonpon"; ObjectID = "fn7-QE-KEy"; */
+"fn7-QE-KEy.title" = "HorKonpon";
+
+/* Class = "IBUILabel"; text = "GARAPENA"; ObjectID = "gMu-yg-OEE"; */
+"gMu-yg-OEE.text" = "DESARROLLADO POR";
+
+/* Class = "IBUILabel"; text = "Pasaiako Udala"; ObjectID = "i4z-ux-u3Z"; */
+"i4z-ux-u3Z.text" = "Ayuntamiento de Pasaia";
+
+/* Class = "IBUILabel"; text = "http://www.pasaia.net"; ObjectID = "kfN-08-GuK"; */
+"kfN-08-GuK.text" = "http://www.pasaia.net";
+
+/* Class = "IBUILabel"; text = "Errenteriako Udala"; ObjectID = "lPE-Wh-KhZ"; */
+"lPE-Wh-KhZ.text" = "Ayuntamiento de Errenteria";
+
+/* Class = "IBUILabel"; text = "http://www.gipuzkoa.net"; ObjectID = "pYR-LU-1cK"; */
+"pYR-LU-1cK.text" = "http://www.gipuzkoa.net";
+
+/* Class = "IBUITabBarItem"; title = "HorKonpon"; ObjectID = "qEl-VS-FCz"; */
+"qEl-VS-FCz.title" = "HorKonpon";
+
+/* Class = "IBUILabel"; text = "Gipuzkoako Foru Aldundia"; ObjectID = "sUA-OB-iV0"; */
+"sUA-OB-iV0.text" = "Diputación Foral de Gipuzkoa";

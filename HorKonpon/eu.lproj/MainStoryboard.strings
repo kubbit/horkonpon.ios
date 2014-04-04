@@ -1,0 +1,9 @@
+
+/* Class = "IBUILabel"; text = "kk"; ObjectID = "W2n-p7-Fvo"; */
+"W2n-p7-Fvo.text" = "kk";
+
+/* Class = "IBUIButton"; normalTitle = "Take Picture"; ObjectID = "lUW-6J-MP2"; */
+"lUW-6J-MP2.normalTitle" = "Argazkia atera";
+
+/* Class = "IBUIButton"; normalTitle = "Get Location"; ObjectID = "tvG-g4-LUa"; */
+"tvG-g4-LUa.normalTitle" = "Kokapena ezarri";

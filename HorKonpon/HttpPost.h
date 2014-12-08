@@ -15,6 +15,7 @@ extern float const TIMEOUT;
 @property (nonatomic, retain) NSMutableData* responseData;
 @property (nonatomic, assign) id delegate;
 
++ (NSString*) urlEncode:(NSString*)pData;
 - (void) send:(NSString*)pURL data:(NSString*)pParameters;
 - (void) connection:(NSURLConnection*)connection didReceiveResponse:(NSURLResponse*)response;
 - (void) connection:(NSURLConnection*)connection didReceiveData:(NSData*)d;

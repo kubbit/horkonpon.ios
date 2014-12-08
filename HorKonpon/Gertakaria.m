@@ -11,6 +11,7 @@
 
 @implementation Gertakaria
 
+@synthesize sortzeData;
 @synthesize argazkia;
 @synthesize fitxategiIzena;
 @synthesize latitudea;
@@ -24,13 +25,30 @@
 @synthesize ohartarazi;
 @synthesize hizkuntza;
 
+- (id) init
+{
+	self = [super init];
+	if (self == nil)
+		return self;
+
+	[self ezarriData];
+
+	return self;
+}
+
 - (void) gehituArgazkia:(UIImage*)pArgazkia
 {
 	NSData* data = UIImageJPEGRepresentation(pArgazkia, 0.9f);
 	[Base64 initialize];
 	self.argazkia = [Base64 encode:data];
+
+	[self ezarriData];
 }
 
+- (void) ezarriData;
+{
+	self.sortzeData = [NSDate date];
+}
 
 - (BOOL) validate
 {
@@ -67,8 +85,13 @@
 {
 	NSMutableDictionary *json =
 	[@{
-		@"bertsioa": [NSNumber numberWithInteger:HORKONPON_API_MESSAGE_VERSION]
+		@"version": [NSNumber numberWithInteger:HORKONPON_API_MESSAGE_VERSION]
 	} mutableCopy];
+
+	NSDateFormatter *formatter;
+	formatter = [[NSDateFormatter alloc] init];
+	[formatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss"];
+	json[@"date"] = [formatter stringFromDate:self.sortzeData];
 
 	NSDictionary *jsApp =
 	@{
@@ -81,47 +104,65 @@
 	{
 		NSDictionary *jsArgazkia =
 		@{
-			@"izena": @"",
-			@"edukia": self.argazkia
+			@"filename": @"",
+			@"content": self.argazkia
 		};
 
-		json[@"argazkia"] = jsArgazkia;
+		json[@"file"] = jsArgazkia;
 	}
 
 	if (self.latitudea != 0 || self.longitudea != 0)
 	{
 		NSDictionary *jsGPS =
 		@{
-			@"latitudea": self.latitudea,
-			@"longitudea": self.longitudea,
-			@"zehaztasuna": self.zehaztasuna
+			@"latitude": self.latitudea,
+			@"longitude": self.longitudea,
+			@"accuracy": self.zehaztasuna
 		};
 
 		json[@"gps"] = jsGPS;
 	}
 
 	if (self.herria != nil && ![self.herria isEqual: @""])
-		json[@"herria"] = self.herria;
+	{
+		NSDictionary *jsHelbidea =
+		@{
+			json[@"locality"]: self.herria
+		};
 
-	if (self.izena != nil && ![self.izena isEqual: @""])
-		json[@"izena"] = self.izena;
+		json[@"address"] = jsHelbidea;
+	}
 
-	if (self.telefonoa != nil && ![self.telefonoa isEqual: @""])
-		json[@"telefonoa"] = self.telefonoa;
+	NSMutableDictionary *jsErabiltzailea =
+	[@{
+	} mutableCopy];
 
-	if (self.posta != nil && ![self.posta isEqual: @""])
-		json[@"posta"] = self.posta;
+	if (!self.anonimoa)
+	{
+		if (self.izena != nil && ![self.izena isEqual: @""])
+			jsErabiltzailea[@"fullname"] = self.izena;
 
-	if (self.oharrak != nil && ![self.oharrak isEqual: @""])
-		json[@"oharrak"] = self.oharrak;
+		if (self.telefonoa != nil && ![self.telefonoa isEqual: @""])
+			jsErabiltzailea[@"phone"] = self.telefonoa;
 
-	if (self.ohartarazi)
-		[json setValue:[NSNumber numberWithBool:self.ohartarazi] forKey:@"ohartarazi"];
+		if (self.posta != nil && ![self.posta isEqual: @""])
+			jsErabiltzailea[@"mail"] = self.posta;
+
+		if (self.ohartarazi)
+			[jsErabiltzailea setValue:[NSNumber numberWithBool:self.ohartarazi] forKey:@"notify"];
+	}
+	else
+                [jsErabiltzailea setValue:[NSNumber numberWithBool:self.ohartarazi] forKey:@"anonymous"];
 
 	if (self.hizkuntza == nil || [self.hizkuntza isEqual: @""])
-		json[@"hizkuntza"] = [[[NSBundle mainBundle] preferredLocalizations] objectAtIndex:0];
+		jsErabiltzailea[@"language"] = [[[NSBundle mainBundle] preferredLocalizations] objectAtIndex:0];
 	else
-		json[@"hizkuntza"] = self.hizkuntza;
+		jsErabiltzailea[@"language"] = self.hizkuntza;
+
+	json[@"user"] = jsErabiltzailea;
+
+	if (self.oharrak != nil && ![self.oharrak isEqual: @""])
+		json[@"comments"] = self.oharrak;
 
 	NSError* error = nil;
 	NSData* jsGertakaria;

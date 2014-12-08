@@ -4,6 +4,7 @@
 
   Copyright (c) 2014 Kubbit Information Technology. All rights reserved.
 */
+"msg_contact_info" = "Recomendamos introducir tus datos de contacto. Es la única manera que tendrá el ayuntamiento de ponerse en contacto contigo para completar la información en caso de ser necesario.\n\nPuedes rellenarlos desde el apartado HorKonpon de las Preferencias del Sistema.\n\nEste mensaje sólo se mostrará esta vez.";
 "Bidali" = "Enviar";
 "Bidaltzen..." = "Enviando...";
 "Kokapena bilatzen..." = "Buscando localización...";

@@ -23,7 +23,10 @@ HttpPost *httpPost;
 UIAlertView *waitDialog;
 UIImage *camera;
 Boolean keyboardVisible;
+Boolean messageShown = NO;
 CGFloat tsvViewHeight;
+NSDate* locationTimestamp;
+int gpsTry = 0;
 
 - (void) viewDidLoad
 {
@@ -46,9 +49,6 @@ CGFloat tsvViewHeight;
 	locationManager.delegate = self;
 	locationManager.desiredAccuracy = kCLLocationAccuracyBest;
 
-	self.lbTitle.title = NSLocalizedString(@"Kokapena bilatzen...", @"");
-	[locationManager startUpdatingLocation];
-
 	self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Bidali", @"")
 	 style:UIBarButtonItemStylePlain target:self action:@selector(sendOnClick:)];
 
@@ -60,6 +60,41 @@ CGFloat tsvViewHeight;
 	[notifCenter addObserver:self selector:@selector(onHideKeyboard:) name:UIKeyboardWillHideNotification object:nil];
 
 	[self cleanUp];
+
+	if (![self showFirstTime])
+		[self getGPSLocation:YES];
+}
+
+-(void) viewWillAppear:(BOOL)animated
+{
+	[super viewWillAppear:animated];
+
+	[self getGPSLocation:NO];
+}
+
+- (void) getGPSLocation:(Boolean)force
+{
+	if (!messageShown)
+		return;
+
+	// prevent using GPS too often
+	if (locationTimestamp != nil && [[NSDate date] timeIntervalSinceDate:locationTimestamp] < MIN_LOCATION_REFRESH_TIME)
+		return;
+
+	if (!force)
+	{
+		// don't change GPS if a photo has been already taken
+		if (gertakaria.argazkia != nil && ![gertakaria.argazkia isEqual: @""])
+			return;
+	}
+
+	// ask permission in iOS >= 8
+	if ([locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)])
+		[locationManager performSelector:@selector(requestWhenInUseAuthorization)];
+
+	self.lbTitle.title = NSLocalizedString(@"Kokapena bilatzen...", @"");
+	gpsTry = 0;
+	[locationManager startUpdatingLocation];
 }
 
 - (void) onShowKeyboard:(NSNotification*)notif
@@ -80,6 +115,8 @@ CGFloat tsvViewHeight;
 		case UIInterfaceOrientationLandscapeRight:
 			keyboardHeight = keyboardFrame.size.width;
 			break;
+		default:
+			break;
 	}
 
 	// enlarge scrollview
@@ -89,6 +126,8 @@ CGFloat tsvViewHeight;
 	// scroll to text box
 	CGPoint bottomOffset = CGPointMake(0, self.lbOharrak.frame.origin.y);
 	[self.tsvView setContentOffset:bottomOffset animated:YES];
+
+	[self getGPSLocation:NO];
 }
 
 - (void) onHideKeyboard:(NSNotification*)notif
@@ -110,8 +149,7 @@ CGFloat tsvViewHeight;
 
 	self.txtOharrak.text = @"";
 
-	[gertakaria gehituArgazkia:nil];
-        gertakaria.oharrak = nil;
+	gertakaria = [[Gertakaria alloc] init];
 }
 
 - (void) showWait
@@ -145,6 +183,55 @@ CGFloat tsvViewHeight;
 
 }
 
+- (Boolean) showFirstTime
+{
+	NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+
+	if ([prefs boolForKey:@"pref_shown_before"])
+	{
+		messageShown = YES;
+
+		return NO;
+	}
+
+	// Don't show message if user has already filled in his contact info
+	if ([prefs stringForKey:@"pref_mail"] != NULL || [prefs stringForKey:@"pref_phone"] != NULL)
+	{
+		messageShown = YES;
+
+		// Set message as shown for the next time
+		[[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"pref_shown_before"];
+		[[NSUserDefaults standardUserDefaults] synchronize];
+
+		return NO;
+	}
+
+	UIAlertView *message = [[UIAlertView alloc] initWithTitle:@""
+	 message:NSLocalizedString(@"msg_contact_info", @"")
+	 delegate:self
+	 cancelButtonTitle:NSLocalizedString(@"Onartu", @"")
+	 otherButtonTitles:nil];
+	[message show];
+
+	return YES;
+}
+
+- (void) alertView:(UIAlertView*)alertView willDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+	// Get GPS location once the message to fill contact information has been accepted
+	// this avoids overlapping of messages (permission to use GPS)
+	if (buttonIndex == 0)
+	{
+		messageShown = YES;
+
+		// Set message as shown for the next time
+		[[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"pref_shown_before"];
+		[[NSUserDefaults standardUserDefaults] synchronize];
+
+		[self getGPSLocation:NO];
+	}
+}
+
 - (IBAction) takePhoto:(id)sender
 {
 	UIImagePickerController *picker = [[UIImagePickerController alloc] init];
@@ -164,6 +251,7 @@ CGFloat tsvViewHeight;
 	gertakaria.oharrak = self.txtOharrak.text;
 
 	NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+	gertakaria.anonimoa = [prefs boolForKey:@"pref_anonymous"];
 	gertakaria.izena = [prefs stringForKey:@"pref_fullname"];
 	gertakaria.telefonoa = [prefs stringForKey:@"pref_phone"];
 	gertakaria.posta = [prefs stringForKey:@"pref_mail"];
@@ -176,7 +264,7 @@ CGFloat tsvViewHeight;
 	[self showWait];
 
 	DebugLog(@"%@", [gertakaria asJSON]);
-	[httpPost send: HORKONPON_API_URL data: [NSString stringWithFormat:@"datuak=%@", [gertakaria asJSON]]];
+	[httpPost send: HORKONPON_API_URL data: [NSString stringWithFormat:@"data=%@&key=%@", [HttpPost urlEncode: [gertakaria asJSON]], [HttpPost urlEncode: HORKONPON_API_KEY]]];
 }
 
 - (void) httpPost:(HttpPost*)httpPost responseReceived:(NSString*)response;
@@ -194,8 +282,10 @@ CGFloat tsvViewHeight;
 	NSString *result;
 	if (jsonParsingError == nil)
 	{
-		result = [json objectForKey:@"mezua"];
-		[self cleanUp];
+		result = [json objectForKey:@"message"];
+
+		if ([[json objectForKey:@"status"] intValue] == 0)
+			[self cleanUp];
 	}
 	else
 	{
@@ -232,20 +322,36 @@ CGFloat tsvViewHeight;
 {
 	DebugLog(@"didUpdateToLocation: %@", newLocation);
 	CLLocation *currentLocation = newLocation;
-	
-	if (currentLocation != nil)
+
+	@try
 	{
-		gertakaria.latitudea = [NSNumber numberWithDouble: currentLocation.coordinate.latitude];
-		gertakaria.longitudea = [NSNumber numberWithDouble: currentLocation.coordinate.longitude];
-		gertakaria.zehaztasuna = [NSNumber numberWithDouble: currentLocation.horizontalAccuracy];
+		if (currentLocation != nil)
+		{
+			if (currentLocation.horizontalAccuracy > MIN_GPS_ACCURACY)
+			{
+				gpsTry++;
+				if (gpsTry > MAX_GPS_ATTEMPTS)
+					self.lbTitle.title = NSLocalizedString(@"Kokapena ezin izan da ezarri. GPS-a aktibo dagoelaz ziurtatu", @"");
 
-		DebugLog(@"%.8f, %.8f", currentLocation.coordinate.latitude, currentLocation.coordinate.longitude);
+				return;
+			}
 
-		self.lbTitle.title = NSLocalizedString(@"Kokapena ezarrita", @"");
+			gertakaria.latitudea = [NSNumber numberWithDouble: currentLocation.coordinate.latitude];
+			gertakaria.longitudea = [NSNumber numberWithDouble: currentLocation.coordinate.longitude];
+			gertakaria.zehaztasuna = [NSNumber numberWithDouble: currentLocation.horizontalAccuracy];
+
+			locationTimestamp = [NSDate date];
+
+			DebugLog(@"%.8f, %.8f", currentLocation.coordinate.latitude, currentLocation.coordinate.longitude);
+
+			self.lbTitle.title = NSLocalizedString(@"Kokapena ezarrita", @"");
+		}
 	}
-
-	// Stop Location Manager
-	[locationManager stopUpdatingLocation];
+	@finally
+	{
+		// Stop Location Manager
+		[locationManager stopUpdatingLocation];
+	}
 
 	// Reverse Geocoding
 	DebugLog(@"Resolving the Address");
@@ -279,8 +385,7 @@ CGFloat tsvViewHeight;
 
 	[picker dismissViewControllerAnimated:YES completion:NULL];
 
-	self.lbTitle.title = NSLocalizedString(@"Kokapena bilatzen...", @"");
-	[locationManager startUpdatingLocation];
+	[self getGPSLocation:YES];
 }
 
 - (void) imagePickerControllerDidCancel:(UIImagePickerController*)picker

@@ -14,7 +14,7 @@
 			<key>DefaultValue</key>
 			<true/>
 			<key>Key</key>
-			<string>pref_anomymous</string>
+			<string>pref_anonymous</string>
 			<key>Title</key>
 			<string>Anonimoki bidali</string>
 			<key>Type</key>

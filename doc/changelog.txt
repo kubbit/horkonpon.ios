@@ -1,0 +1,13 @@
+================================================================================
+  Version 1.2
+================================================================================
+- Enhanced support for iOS 8 and superior
+- Improved positioning algorithm
+- Added message recommending filling contact details
+- Updated to HorKonpon API version 2
+- Minor changes and improvements
+
+================================================================================
+  Version 1.0
+================================================================================
+- First published version

@@ -22,7 +22,7 @@ float const TIMEOUT = 30.0;
 	return self;
 }
 
-- (NSString*) urlEncode:(NSString*)pData
++ (NSString*) urlEncode:(NSString*)pData
 {
 	CFStringRef safeString = CFURLCreateStringByAddingPercentEscapes(NULL, (CFStringRef)pData,
 	 NULL, CFSTR("/%&=?$#+-~@<>|\\*,.()[]{}^!"), kCFStringEncodingUTF8);
@@ -39,8 +39,7 @@ float const TIMEOUT = 30.0;
 	NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
 	[urlRequest setTimeoutInterval:TIMEOUT];
 	[urlRequest setHTTPMethod:@"POST"];
-	NSString *body = [self urlEncode: pData];
-	[urlRequest setHTTPBody:[body dataUsingEncoding:NSUTF8StringEncoding]];
+	[urlRequest setHTTPBody:[pData dataUsingEncoding:NSUTF8StringEncoding]];
 
 	NSURLConnection* connection = [NSURLConnection connectionWithRequest:urlRequest delegate:self];
 	[connection start];

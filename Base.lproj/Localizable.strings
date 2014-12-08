@@ -4,6 +4,7 @@
 
   Copyright (c) 2014 Kubbit Information Technology. All rights reserved.
 */
+"msg_contact_info" = "Zure kontaktu datuak betetzea gomendatzen dugu. Behar izanez gero, udaletxea zurekin harremanetan jartzeko izango duen modu bakarra da.\n\nHorretarako Sistemako Ezarpenetan dagoen HorKonpon atala ireki dezakezu.\n\nMezu hau behin bakarrik agertuko da.";
 "DISCLAIMER" = "<html>
 	<head>
 		<style type=\"text/css\">
